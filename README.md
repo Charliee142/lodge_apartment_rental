@@ -153,8 +153,23 @@ Admin Dashboard
 <img width="960" height="540" alt="28" src="https://github.com/user-attachments/assets/a189538d-b6c6-42f6-894d-2ed0989f8672" />
 <img width="960" height="540" alt="29" src="https://github.com/user-attachments/assets/57efe13e-c320-4f58-b7c9-bde6cc2e281e" />
 <img width="960" height="540" alt="30" src="https://github.com/user-attachments/assets/abfc8ede-c9ae-48e6-8990-86a2e978614d" />
-
-
+<img width="960" height="540" alt="31" src="https://github.com/user-attachments/assets/1824e19c-16a1-48a6-b517-0521e38797ff" />
+<img width="960" height="540" alt="32" src="https://github.com/user-attachments/assets/216388ee-4ea7-45a2-97eb-3b194646c9e1" />
+<img width="960" height="540" alt="33" src="https://github.com/user-attachments/assets/afed8699-8959-4850-b62d-0a8a992aca12" />
+<img width="960" height="540" alt="34" src="https://github.com/user-attachments/assets/52713066-986c-4188-8b0b-f65735cbadf5" />
+<img width="960" height="540" alt="35" src="https://github.com/user-attachments/assets/d5d8c4b8-d6b2-4a96-b622-d5ca46b19fed" />
+<img width="960" height="540" alt="36" src="https://github.com/user-attachments/assets/47f6d146-280b-4b6e-a589-2aaa695d55c9" />
+<img width="960" height="540" alt="37" src="https://github.com/user-attachments/assets/e31d962b-2865-44d8-b866-797f1dfb4bff" />
+<img width="960" height="540" alt="38" src="https://github.com/user-attachments/assets/0c8901c5-efe0-4500-ba8e-e49b0d61a27e" />
+<img width="960" height="540" alt="39" src="https://github.com/user-attachments/assets/a7567066-b20c-41a6-b7bb-78dfb44cba21" />
+<img width="960" height="540" alt="40" src="https://github.com/user-attachments/assets/8d7a5285-011d-4f5f-8aa3-e24dfb68b382" />
+<img width="960" height="540" alt="41" src="https://github.com/user-attachments/assets/fe5c1a52-87cc-471a-ab80-5a898fce2a72" />
+<img width="960" height="540" alt="42" src="https://github.com/user-attachments/assets/a7d4d893-ee27-4e2a-9878-bf43dbfa41c7" />
+<img width="960" height="540" alt="43" src="https://github.com/user-attachments/assets/5a142f06-f96f-4327-a525-ce85ed646f5e" />
+<img width="960" height="540" alt="44" src="https://github.com/user-attachments/assets/f03ad60c-85d2-4538-99a7-22d080566482" />
+<img width="960" height="540" alt="45" src="https://github.com/user-attachments/assets/be357da3-3b2f-4805-ab9e-348fcc14e635" />
+<img width="960" height="540" alt="46" src="https://github.com/user-attachments/assets/3cc1f08e-55d0-406f-aa9a-73edd8e78123" />
+<img width="960" height="540" alt="47" src="https://github.com/user-attachments/assets/90d598fe-7ccf-49ed-8cce-add45d886207" />
 
 
 Installation
