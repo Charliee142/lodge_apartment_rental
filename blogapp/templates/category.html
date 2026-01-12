@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{categories.name}}{% endblock %}
+{% block content %}
+
+<!-- Blog List & Sidebar -->
+<div class="container mt-5 mb-11">
+    <div class="row">
+        <!-- Blog List Section -->
+        <div class="col-lg-8 mb-5 mb-lg-0">
+            <div class="card border-0 shadow-sm p-4">
+                {% include "includes/list.html" %}
+            </div>
+        </div>
+
+        <!-- Sidebar Section -->
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-sm p-4">
+        
+                {% include "includes/sidebar.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+
+   <!-- Additional Styles -->
+<style>
+    /* Button Hover Effects */
+    .btn-primary:hover {
+        background-color: #0b5ed7;
+        transform: scale(1.05);
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Blog List & Sidebar Card Effects */
+    .card {
+        border-radius: 12px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock content %}

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+    }
+
+    .card-container {
+        max-width: 700px;
+        width: 100%;
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 0.8s ease-in-out;
+    }
+
+    @keyframes fadeInUp {
+        0% { opacity: 0; transform: translateY(30px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+        border: none;
+        transition: 0.3s;
+        border-radius: 12px;
+        padding: 20px;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-body i {
+        color: #007bff;
+    }
+
+    .card-body a {
+        width: 100%;
+        padding: 10px;
+        font-weight: bold;
+        border-radius: 30px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .card-body a:hover {
+        background: #0056b3;
+        color: white;
+    }
+
+    @media (max-width: 576px) {
+        .card-body a {
+            font-size: 14px;
+            padding: 8px;
+        }
+    }
+</style>
+
+<div class="container">
+    <div class="card-container">
+        <div class="row">
+
+            <!-- Bookings -->
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card text-center shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-calendar-check fa-2x mb-3"></i>
+                        <h5 class="card-title">
+                            <a class="btn btn-dark" href="{% url 'user_dashboard' %}">Bookings</a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Profile -->
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card text-center shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-user-edit fa-2x mb-3"></i>
+                        <h5 class="card-title">
+                            <a class="btn btn-dark" href="{% url 'profile_details' %}">Profile</a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking History -->
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card text-center shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-history fa-2x mb-3"></i>
+                        <h5 class="card-title">
+                            <a class="btn btn-dark" href="{% url 'past_bookings' %}">History</a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

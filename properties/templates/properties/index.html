@@ -1,0 +1,368 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Estate Dream | Luxury Apartments{% endblock %}
+{% block meta_description %}Discover the finest luxury apartments with over 60,502 active listings in the International States.{% endblock %}
+  {% block content %}
+  <style>
+    .testimonial-section {
+        text-align: center;
+        padding: 60px 0;
+    }
+    .testimonial-card {
+        background: #fff;
+        color: #333;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .testimonial-card img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+</style>
+  <style>
+    .primary-color { background-color: blue; }
+    .success-color { background-color: green; }
+    .danger-color { background-color: red; }
+    .warning-color { background-color: orange; }
+
+  </style>
+  <main>
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+          <img src="{% static 'images/banner1.jpg' %}" alt="Luxury Apartments">
+          <div class="container">
+            <div class="carousel-caption text-start">
+              <h1 class="text-white">Best Way To Find Luxury Homes</h1>
+              <p class="text-white">Discover the finest apartments with over 60,502 active listings in the International States.</p>
+              <p><a class="btn btn-lg btn-primary" href="{% url 'account_signup' %}">Get Started</a></p>
+            </div>
+          </div>
+          
+        </div>
+        <!-- Slide 2 -->
+        <div class="carousel-item">
+          <img src="{% static 'images/banner2.jpg' %}" alt="Modern Design">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1 class="text-white">Modern Luxury Designs</h1>
+              <p class="text-white">Experience the perfect combination of style and comfort in every home.</p>
+              <p><a class="btn btn-lg btn-primary" href="{% url 'properties' %}">Explore Listings</a></p>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="carousel-item">
+          <img src="{% static 'images/banner3.jpg' %}" alt="Affordable Rates">
+          <div class="container">
+            <div class="carousel-caption text-end">
+              <h1 class="text-white">Affordable Rates</h1>
+              <p class="text-white">Find your dream home without breaking the bank.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  
+    <!-- Apartment SECTION -->
+<section class="bg-white py-5 py-md-11">
+  <div class="container">
+    <div class="row align-items-end mb-4 mb-md-7" data-aos="fade-up">
+      <div class="col-md text-center mb-2">
+        <h1 class="mb-1">Features Apartments</h1>
+        <p class="font-size-lg text-muted">Discover the finest luxury apartments with over 60,502 active listings in the Local and International States.</p>
+      </div>
+      <div class="col-md-auto">
+        <a href="{% url 'properties' %}" class="btn btn-dark">See All</a>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <!-- apartments -->
+      {% for apartment in apartments %}
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0">
+          <a href="{% url 'apartment_details' apartment.id %}">
+            <img src="{{ apartment.images.url }}" class="card-img-top img-fluid" alt="{{ apartment.name }}" style="height: 200px; object-fit: cover;">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title fw-bold text-primary">{{ apartment.name }}</h5>
+            <p class="text-muted">
+              <i class="bi bi-geo-alt-fill text-danger"></i> {{ apartment.location }}
+            </p>
+            <p class="text-muted">
+              <i class="bi bi-currency-dollar text-success"></i> {{ apartment.price }}/month
+            </p>
+            <p class="text-muted">
+              <i class="bi bi-info-circle-fill text-info"></i> {{ apartment.description|truncatechars:100 }}
+            </p>
+
+            <!-- Features List -->
+            <ul class="list-unstyled small">
+              {% if apartment.features.all %}
+                {% for feature in apartment.features.all %}
+                  <li><i class="bi bi-check-circle text-success"></i> {{ feature.name }}</li>
+                {% endfor %}
+              {% else %}
+                <li class="text-muted">No features available</li>
+              {% endif %}
+              <li><i class="bi bi-house-fill"></i> Status: <b>{{ apartment.status }}</b></li>
+            </ul>
+
+            <a href="{% url 'apartment_details' apartment.id %}" class="btn btn-dark w-100">Book Now &raquo;</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-warning text-center" role="alert">
+          <i class="bi bi-exclamation-circle"></i> No properties found. Try a different search term.
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Our Services -->
+   <section id="services" class="py-5">
+    <div class="container text-center">
+        <h2 class="mb-4">Our Services</h2>
+        <p class="text-muted mb-5">Explore the exceptional services we offer to make your stay comfortable and memorable.</p>
+        
+        <div class="row g-4">
+            <!-- Service 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 p-3">
+                    <div class="card-body">
+                        <i class="fas fa-bed fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Fully Furnished Apartments</h5>
+                        <p class="card-text text-muted">Enjoy a comfortable stay in our well-furnished apartments, designed to give you a home-like experience.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 p-3">
+                    <div class="card-body">
+                        <i class="fas fa-wifi fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Free High-Speed WiFi</h5>
+                        <p class="card-text text-muted">Stay connected with our complimentary high-speed WiFi, available in all rooms and common areas.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 p-3">
+                    <div class="card-body">
+                        <i class="fas fa-car fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Secure Parking</h5>
+                        <p class="card-text text-muted">We provide safe and secure parking facilities to ensure the security of your vehicle.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 p-3">
+                    <div class="card-body">
+                        <i class="fas fa-swimming-pool fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Swimming Pool & Recreation</h5>
+                        <p class="card-text text-muted">Relax and unwind with our swimming pool and recreational facilities available for all guests.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 5 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 p-3">
+                    <div class="card-body">
+                        <i class="fas fa-concierge-bell fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">24/7 Concierge Service</h5>
+                        <p class="card-text text-muted">Our professional concierge team is available 24/7 to assist you with any requests or concerns.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 6 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 p-3">
+                    <div class="card-body">
+                        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">24/7 Security</h5>
+                        <p class="card-text text-muted">Your safety is our priority, with round-the-clock security and surveillance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="position-relative py-5 py-md-11">
+  <div class="container">
+      <div class="row align-items-center text-center mb-5" data-aos="fade-up">
+          <div class="col-md-8 mx-auto">
+              <h1 class="text-dark fw-bold">Why Stay With Us?</h1>
+              <p class="text-light font-size-lg">
+                  Experience unmatched comfort, security, and affordability—all in one place.
+              </p>
+          </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+          <!-- Feature 1: Prime Location -->
+          <div class="col">
+              <div class="card border-0 shadow-lg lift sk-fade">
+                  <div class="card-zoom position-relative h-100">
+                      <a href="#" class="card-img d-block sk-thumbnail img-ratio-3">
+                          <img class="rounded shadow-light-lg img-fluid" width="360" src="{% static 'images/city2.jpg' %}" alt="Prime Location">
+                      </a>
+                      <span class="badge badge-lg badge-primary badge-pill badge-float bottom-0 left-0 mb-4 ms-4 px-4 py-2">
+                          <i class="fas fa-map-marker-alt me-2"></i> Prime Location
+                      </span>
+                  </div>
+                  <div class="card-footer bg-white text-center p-4">
+                      <h5 class="fw-bold">Stay in the heart of the city</h5>
+                      <p class="text-muted">Easy access to transport, shopping, and entertainment.</p>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Feature 2: Affordable Rates -->
+          <div class="col">
+              <div class="card border-0 shadow-lg lift sk-fade">
+                  <div class="card-zoom position-relative h-100">
+                      <a href="#" class="card-img d-block sk-thumbnail img-ratio-3">
+                          <img class="rounded shadow-light-lg img-fluid" src="{% static 'images/pay.jpg' %}" alt="Affordable Rates">
+                      </a>
+                      <span class="badge badge-lg badge-success badge-pill badge-float bottom-0 left-0 mb-4 ms-4 px-4 py-2">
+                          <i class="fas fa-wallet me-2"></i> Affordable Rates
+                      </span>
+                  </div>
+                  <div class="card-footer bg-white text-center p-4">
+                      <h5 class="fw-bold">Best value for your money</h5>
+                      <p class="text-muted">Flexible payment options and exclusive discounts.</p>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Feature 3: Safe & Secure -->
+          <div class="col">
+              <div class="card border-0 shadow-lg lift sk-fade">
+                  <div class="card-zoom position-relative">
+                      <a href="#" class="card-img d-block sk-thumbnail img-ratio-3">
+                          <img class="rounded shadow-light-lg img-fluid" src="{% static 'images/camera.png' %}" alt="Safe & Secure">
+                      </a>
+                      <span class="badge badge-lg badge-danger badge-pill badge-float bottom-0 left-0 mb-4 ms-4 px-4 py-2">
+                          <i class="fas fa-shield-alt me-2"></i> Safe & Secure
+                      </span>
+                  </div>
+                  <div class="card-footer bg-white text-center p-4">
+                      <h5 class="fw-bold">24/7 Security & Surveillance</h5>
+                      <p class="text-muted">CCTV monitoring, gated access, and trained security.</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL SECTION -->
+<section class="testimonial-section">
+  <div class="container">
+      <h2 class="fw-bold">Explore the guests' experience</h2>
+      <p class="text-muted">See what our satisfied guests have to say about their stay at <strong>Estate Dream</strong>.</p>
+      <div class="row mt-4">
+          <div class="col-md-4">
+              <div class="testimonial-card p-4 text-center">
+                  <img src="{% static 'images/client1.jpg' %}" alt="Client 1">
+                  <p>"The lodge was clean, secure, and very comfortable. Booking was easy, and the customer service was outstanding!"</p>
+                  <h5 class="mb-0">John Doe</h5>
+                  <div class="text-warning small">
+                    ★★★★★
+                  </div>
+                  <small>Guest</small>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="testimonial-card p-4 text-center">
+                  <img src="{% static 'images/client2.jpg' %}" alt="Client 2">
+                  <p>"Amazing experience! The apartment had everything I needed, and the location was perfect for my stay. Will definitely come back again!"</p>
+                  <h5 class="mb-0">Lisa Smith</h5>
+                  <div class="text-warning small">
+                    ★★★★★
+                  </div>
+                  <small>Guest</small>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="testimonial-card p-4 text-center">
+                  <img src="{% static 'images/client3.jpg' %}" alt="Client 3">
+                  <p>"I felt safe and comfortable throughout my stay. The management team was very responsive and helpful and above all, clean rooms and a welcoming atmosphere."</p>
+                  <h5 class="mb-0">Michael Brown</h5>
+                  <div class="text-warning small">
+                    ★★★★★
+                  </div>
+                  <small>Guest</small>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+    
+<!-- LODGE BLOG SECTION -->
+<section class="bg-white py-5 py-md-11">
+  <div class="container">
+    <div class="row align-items-end mb-4 mb-md-7" data-aos="fade-up">
+      <div class="col-md text-center mb-2">
+        <h1 class="mb-1">Lodge News & Updates</h1>
+        <p class="font-size-lg text-muted">Stay updated with the latest travel tips, offers, and guest experiences.</p>
+      </div>
+      <div class="col-md-auto">
+        <a href="{% url 'blog' %}" class="btn btn-dark">Browse All</a>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <!-- Blog Post 1 -->
+       {% for post in posts %}
+      <div class="col">
+        <div class="card border shadow-sm lift">
+          <a href="{% url 'post' post.slug %}" class="card-zoom">
+            <img src="{{post.image.url}}" class="card-img-top rounded" alt="Lodge Special Offers">
+          </a>
+          <div class="card-body">
+            <span class="badge {{ post.get_label_class }}-color mb-2">
+              {{ post.categories }}
+          </span>
+            <h5 class="card-title"><a href="{% url 'post' post.slug %}" class="text-dark">{{post.title}}</a></h5>
+            <p class="text-muted small">Posted on {{post.created_on}} | By {{post.author.first_name}} {{post.author.last_name}}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+  {% endblock content %}
+  

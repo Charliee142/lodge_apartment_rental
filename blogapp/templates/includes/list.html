@@ -1,0 +1,83 @@
+{% load humanize %}
+{% load static %}
+ <!-- Blog Post -->
+ {% if posts %}
+ {% if query %}
+ <h3>Search results found ({{posts.count}})</h3>
+ {% endif %}
+  {% for p in posts %}
+  <div class="row mb-6 align-items-center shadow">
+      <div class="col-lg-6 col-xl-5 mb-6 mb-lg-0">
+          <a href="{% url 'post' p.slug %}" class="d-block sk-thumbnail img-ratio-4 rounded lift">
+              <img src="{{p.image.url}}" alt="..." class="rounded img-fluid">
+          </a>
+      </div>
+
+      <div class="col-lg-6 col-xl-7">
+         
+         {% if categories %}
+          <a  class="d-inline-block">
+              <h5 class="text-blue">{{p.categories}}</h5>
+          </a>
+          {% endif %}
+          <a href="{% url 'post' p.slug %}" class="d-block me-xl-12">
+              <h3 class="">{{p.title}}</h3>
+          </a>
+
+          <p class="line-clamp-3 mb-6 mb-xl-8 me-xl-6">{{p.content|striptags|truncatewords:20}}</p>
+
+          <div class="d-md-flex align-items-center">
+              <div class="border rounded-circle d-inline-block mb-4 mb-md-0 me-4">
+                  <div class="p-1">
+                    {% if p.author.profile_picture %}
+                      <img src="{{p.author.profile_picture.url}}" alt="..." class="rounded-circle" width="52" height="52">
+                      {% else %}
+                      <img src="{% static 'images/avatar.jpg' %}" alt="..." class="rounded-circle" width="52" height="52">
+                      {% endif %}
+                  </div>
+              </div>
+
+              <div class="mb-4 mb-md-0">
+                  <a class="d-block"><h6 class="mb-0">{{p.author.first_name}} {{p.author.last_name}}</h6></a>
+                  <span class="font-size-sm"> {{p.created_on}}</span>
+              </div>
+          </div>
+      </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="col-xl-6 mx-auto text-center">
+    <h1 class="display-6">Ohh! Page Not Found</h1>
+    <h5 class="text-center">We can’t seem to find the page you’re looking for</h5>
+</div>
+  {% endif %}
+    <!-- PAGINATION
+                ================================================== -->
+                {% if posts %}
+                <nav class="mt-4" aria-label="Page navigationa">
+                        
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            {% if posts.has_previous %}
+                            <a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true"><i class="fas fa-arrow-left"></i></span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% for i in posts.paginator.page_range %}
+                        {% if posts.number == i %}
+                        <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% else %}
+                        <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                        <li class="page-item">
+                            {% if posts.has_next %}
+                            <a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                            </a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </nav>
+                {% endif %}

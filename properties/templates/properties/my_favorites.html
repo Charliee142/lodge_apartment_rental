@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}My Favorite Apartments{% endblock %}
+{% block content %}
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">
+        <i class="bi bi-heart-fill text-danger"></i> My Favorite Apartments
+    </h2>
+
+    {% if favorites %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for favorite in favorites %}
+        <div class="col">
+            <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+                <!-- Apartment Image -->
+                {% if favorite.apartment.images %}
+                <img src="{{ favorite.apartment.images.url }}" class="card-img-top" alt="{{ favorite.apartment.name }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                <img src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top" alt="No Image Available">
+                {% endif %}
+
+                <div class="card-body text-center">
+                    <h5 class="card-title">
+                        <a href="{% url 'apartment_details' favorite.apartment.id %}" class="text-decoration-none text-dark fw-bold">
+                            <i class="bi bi-house-door-fill"></i> {{ favorite.apartment.name }}
+                        </a>
+                    </h5>
+                </div>
+                <div class="card-footer bg-light text-center">
+                    <a href="{% url 'apartment_details' favorite.apartment.id %}" class="btn btn-primary btn-sm px-3">
+                        <i class="bi bi-eye"></i> View Apartment
+                    </a>
+                    <a href="{% url 'remove_favorite' favorite.apartment.id %}" class="btn btn-outline-danger btn-sm px-3">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Remove
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="alert alert-info text-center mt-4 p-4 rounded-3 shadow-sm">
+        <h5><i class="bi bi-heartbreak-fill"></i> No favorite apartments yet.</h5>
+        <p class="mb-0">Browse apartments and add them to your favorites!</p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- JavaScript for Removing Favorites -->
+
+
+{% endblock %}

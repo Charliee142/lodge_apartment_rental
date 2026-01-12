@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Landlord Dashboard{% endblock %}
+{% block content %}
+
+<div class="container my-5">
+    <h2 class="mb-4 text-center">Booking Approval</h2>
+
+    {% if bookings %}
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered text-center align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Apartment</th>
+                    <th>Renter</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Guests</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.apartment.name }}</td>
+                    <td>{{ booking.user.username }}</td>
+                    <td>{{ booking.check_in_date }}</td>
+                    <td>{{ booking.check_out_date }}</td>
+                    <td>{{ booking.number_of_guests }}</td>
+                    <td class="d-flex justify-content-center">
+                        <form method="POST" action="{% url 'approve_booking' booking.id %}" class="me-2">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="bi bi-check-circle"></i> Approve
+                            </button>
+                        </form>
+                        <form method="POST" action="{% url 'reject_booking' booking.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="bi bi-x-circle"></i> Reject
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center mt-4">
+        <h5>No bookings to approve.</h5>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

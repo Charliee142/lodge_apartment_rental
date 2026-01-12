@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load socialaccount %}
+{% load allauth i18n %}
+
+{% block head_title %} {% trans "Signup" %} {% endblock head_title %}
+
+{% block content %}
+<style>
+    .form-container {
+        max-width: 400px;
+        width: 90%;
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 0.8s ease-in-out;
+    }
+
+    @keyframes fadeInUp {
+        0% { opacity: 0; transform: translateY(30px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn-primary, .btn-google, .btn-facebook {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-primary:hover, .btn-google:hover, .btn-facebook:hover {
+        transform: scale(1.05);
+    }
+
+    .btn-google {
+        background-color: #db4437;
+        color: white;
+    }
+
+    .btn-facebook {
+        background-color: #3b5998;
+        color: white;
+    }
+
+    .social-buttons a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .social-buttons i {
+        font-size: 20px;
+    }
+
+    /* Enhancing input fields */
+    input.form-control {
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        transition: 0.3s;
+    }
+
+    input.form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+    }
+
+    @media (max-width: 576px) {
+        .form-container {
+            padding: 1.5rem;
+        }
+        .btn-primary, .btn-google, .btn-facebook {
+            font-size: 14px;
+            padding: 10px;
+        }
+    }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100 mb-4 mt-4">
+    <div class="form-container text-center">
+        <h2 class="mb-3 text-dark">{% trans "Sign Up" %}</h2>
+        <img src="{% static 'images/1.jpg' %}" alt="Logo" class="img-fluid rounded-circle mb-3" width="80">
+        
+        <p class="text-dark">
+            {% blocktranslate %}Already have an account? <a href="{{ login_url }}" class="text-primary">Sign in</a>.{% endblocktranslate %}
+        </p>
+        
+        {% if not SOCIALACCOUNT_ONLY %}
+            <form method="post" action="{% url 'account_signup' %}" class="text-start">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary">{% trans "Sign Up" %}</button>
+            </form>
+        {% endif %}
+
+        {% if SOCIALACCOUNT_ENABLED %}
+            <hr>
+            <h5 class="text-dark">{% trans "Or sign up with" %}</h5>
+            <div class="social-buttons mt-3">
+                <a href="{% provider_login_url 'google'%}" class="btn btn-google mb-2">
+                    <i class="fab fa-google"></i> Sign up with Google
+                </a>
+                <a href="#" class="btn btn-facebook">
+                    <i class="fab fa-facebook"></i> Sign up with Facebook
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+
+<style>
+  body {
+    transition: background 0.3s, color 0.3s;
+  }
+
+  h1 {
+    font-size: 2rem;
+    color: var(--text-color);
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .theme-dark {
+    --bg-color: #1c1c1c;
+    --text-color: #ffffff;
+    --card-bg: #2a2a2a;
+    --card-text: #ffffff;
+    --btn-primary: #ff9800;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  .card {
+    transition: all 0.3s ease-in-out;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-body {
+    background-color: var(--card-bg, #fff);
+    color: var(--card-text, #000);
+  }
+
+  .dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+</style>
+
+<!-- Dark Mode Toggle -->
+<button id="darkModeToggle" class="btn btn-outline-dark dark-mode-toggle">
+  Toggle Dark Mode
+</button>
+
+<div class="container my-5">
+  <h1 class="text-center mb-4 mt-4">Search Properties</h1>
+
+  {% if query %}
+    <h4 class="mb-4 text-center">
+      <span class="badge bg-primary">{{ results_count }}</span> result{{ results_count|pluralize }} found for "<b>{{ query }}</b>"
+    </h4>
+  {% else %}
+    <h4 class="mb-4 text-center text-muted">Find your dream apartment today!</h4>
+  {% endif %}
+
+  <!-- Search Results -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for apartment in results %}
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0">
+          <a href="{% url 'apartment_details' apartment.id %}">
+            <img src="{{ apartment.images.url }}" class="card-img-top img-fluid" alt="{{ apartment.name }}" style="height: 200px; object-fit: cover;">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title fw-bold text-primary">{{ apartment.name }}</h5>
+            <p class="text-muted">
+              <i class="bi bi-geo-alt-fill text-danger"></i> {{ apartment.location }}
+            </p>
+            <p class="text-muted">
+              <i class="bi bi-currency-dollar text-success"></i> {{ apartment.price }}/month
+            </p>
+            <p class="text-muted">
+              <i class="bi bi-info-circle-fill text-info"></i> {{ apartment.description|truncatechars:100 }}
+            </p>
+
+            <!-- Features List -->
+            <ul class="list-unstyled small">
+              {% if apartment.features.all %}
+                {% for feature in apartment.features.all %}
+                  <li><i class="bi bi-check-circle text-success"></i> {{ feature.name }}</li>
+                {% endfor %}
+              {% else %}
+                <li class="text-muted">No features available</li>
+              {% endif %}
+              <li><i class="bi bi-house-fill"></i> Status: <b>{{ apartment.status }}</b></li>
+            </ul>
+
+            <a href="{% url 'apartment_details' apartment.id %}" class="btn btn-primary w-100">Enquire Now &raquo;</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-warning text-center" role="alert">
+          <i class="bi bi-exclamation-circle"></i> No properties found. Try a different search term.
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  // Dark Mode Toggle Functionality
+  const darkModeToggle = document.getElementById("darkModeToggle");
+  const body = document.body;
+
+  // Check if dark mode is already enabled
+  if (localStorage.getItem("theme") === "dark") {
+    body.classList.add("theme-dark");
+  }
+
+  darkModeToggle.addEventListener("click", function () {
+    body.classList.toggle("theme-dark");
+
+    // Save preference in localStorage
+    if (body.classList.contains("theme-dark")) {
+      localStorage.setItem("theme", "dark");
+    } else {
+      localStorage.setItem("theme", "light");
+    }
+  });
+</script>
+
+{% endblock %}

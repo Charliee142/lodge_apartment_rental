@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Booking Details{% endblock %}
+{% block content %}
+
+<div class="container my-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+            <h3 class="mb-0"><i class="bi bi-receipt-cutoff"></i> Booking Details</h3>
+        </div>
+        <div class="card-body p-4">
+            <p><strong><i class="bi bi-house-door"></i> Apartment:</strong> {{ booking.apartment.name }}</p>
+            <p><strong><i class="bi bi-calendar-check"></i> Check-in:</strong> {{ booking.check_in_date }}</p>
+            <p><strong><i class="bi bi-calendar-x"></i> Check-out:</strong> {{ booking.check_out_date }}</p>
+            <p><strong><i class="bi bi-info-circle"></i> Status:</strong> 
+                {% if booking.status == "Completed" %}
+                    <span class="badge bg-success px-3 py-2">{{ booking.status }}</span>
+                {% elif booking.status == "Cancelled" %}
+                    <span class="badge bg-danger px-3 py-2">{{ booking.status }}</span>
+                {% else %}
+                    <span class="badge bg-warning text-dark px-3 py-2">{{ booking.status }}</span>
+                {% endif %}
+            </p>
+            <p><strong><i class="bi bi-clock-history"></i> Booking Date:</strong> {{ booking.created_at }}</p>
+        </div>
+        <div class="card-footer text-center">
+            <a href="{% url 'past_bookings' %}" class="btn btn-primary">
+                <i class="bi bi-arrow-left"></i> Back to Bookings
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

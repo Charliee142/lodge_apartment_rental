@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Blog Home{% endblock title %}
+{% block meta %}
+<meta name="description" content="Welcome to our blog. Discover amazing articles and stay updated with the latest insights.">
+{% endblock meta %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 bg-light position-relative">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Text Content -->
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="fw-bold text-dark mb-3">Welcome to Our Blog</h1>
+                <p class="lead text-muted">Discover amazing articles and stay updated with the latest insights.</p>
+                <a href="#" class="btn btn-primary shadow-sm mt-3">Explore Articles</a>
+            </div>
+            <!-- Illustration -->
+            <div class="col-lg-6 text-center mt-4 mt-lg-0">
+                <img src="" class="img-fluid" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog List & Sidebar -->
+<div class="container mt-5 mb-11">
+    <div class="row">
+        <!-- Blog List Section -->
+        <div class="col-lg-8 mb-5 mb-lg-0">
+            <div class="card border-0 shadow-sm p-4">
+                <h3 class="fw-bold text-dark mb-4">Latest Articles</h3>
+                {% include "includes/list.html" %}
+            </div>
+        </div>
+
+        <!-- Sidebar Section -->
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-sm p-4">
+                <h4 class="fw-bold text-dark mb-3">Categories & More</h4>
+                {% include "includes/sidebar.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Additional Styles -->
+<style>
+    /* Button Hover Effects */
+    .btn-primary:hover {
+        background-color: #0b5ed7;
+        transform: scale(1.05);
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Blog List & Sidebar Card Effects */
+    .card {
+        border-radius: 12px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock content %}

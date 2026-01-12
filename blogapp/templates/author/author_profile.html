@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4 mb-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3>Author Profile</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>Username:</strong> {{ author.user.username }}</p>
+            <p><strong>Email:</strong> {{ author.user.email }}</p>
+            <p><strong>Website:</strong> <a href="{{ author.website }}" target="_blank">{{ post.author.website }}</a></p>
+            <p><strong>Social Links:</strong></p>
+            <ul>
+                {% for platform, link in author.social_links.items %}
+                    <li><a href="{{ link }}" target="_blank">{{ platform }}</a></li>
+                {% empty %}
+                    <li>No social links available.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

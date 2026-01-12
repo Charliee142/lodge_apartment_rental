@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Sign Up Closed" %}{% endblock %}
+
+{% block content %}
+
+<!-- contact banner -->
+<section class="w3l-about-breadcrumb text-center">
+    <div class="breadcrumb-bg breadcrumb-bg-about py-5">
+        <div class="container py-lg-5 mt-5">
+            <div class="banner-info-grid mt-5">
+                <h2 class="w3l-title-breadcrumb">Signup Closed Page</h2>
+            </div>
+            <ul class="breadcrumbs-custom-path">
+                <li><a href="{% url 'index' %}">Account</a></li>
+                <li class="active"><span class="fa fa-angle-right mx-2" aria-hidden="true"></span>Signup Closed</li>
+            </ul>
+        </div>
+    </div>
+  </section>
+  <!-- //contact banner -->
+
+<h1>{% trans "Sign Up Closed" %}</h1>
+
+<p>{% trans "We are sorry, but the sign up is currently closed." %}</p>
+{% endblock %}

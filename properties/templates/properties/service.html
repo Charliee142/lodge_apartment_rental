@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Our Services{% endblock %}
+
+{% block content %}
+<style>
+    .hero {
+        background: url('{% static "images/banner4.jpg" %}') no-repeat center center/cover;
+        color: white;
+        padding: 100px 0;
+        text-align: center;
+    }
+    .service-card {
+        transition: 0.3s;
+    }
+    .service-card:hover {
+        transform: scale(1.05);
+    }
+</style>
+<!-- Hero Section -->
+<header class="hero">
+    <div class="container">
+        <h1>Our Services</h1>
+        <p>Experience the best hospitality and comfort</p>
+    </div>
+</header>
+
+<!-- Services Section -->
+<div class="container my-5">
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card service-card p-3">
+                <img src="{% static 'images/room.jpg' %}" class="card-img-top" alt="Room Service">
+                <div class="card-body">
+                    <h5 class="card-title">Luxurious Rooms</h5>
+                    <p class="card-text">Enjoy a comfortable stay in our well-furnished rooms.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card service-card p-3">
+                <img src="{% static 'images/kitchen.jpg' %}" class="card-img-top" alt="Food Service">
+                <div class="card-body">
+                    <h5 class="card-title">24/7 Dining</h5>
+                    <p class="card-text">Savor delicious meals at any time with our premium dining services.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card service-card p-3">
+                <img src="{% static 'images/swim1.jpg' %}" class="card-img-top" alt="Pool Service">
+                <div class="card-body">
+                    <h5 class="card-title">Swimming Pool</h5>
+                    <p class="card-text">Relax and refresh in our luxurious swimming pool.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="bg-dark text-white text-center py-5">
+    <h2>Book Your Stay Now!</h2>
+    <p>Experience comfort and luxury like never before.</p>
+    <a href="{% url 'contact' %}" class="btn btn-primary">Contact Us</a>
+</div>
+
+{% endblock content %}

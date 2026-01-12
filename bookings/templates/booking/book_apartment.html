@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Book Apartment{% endblock %}
+{% block content %}
+
+    <div class="container my-5">
+        <div class="text-center">
+            <h2 class="fw-bold">Estate Dream Booking Form</h2>
+            <p class="lead">Book your stay at <b>{{ apartment.name }}</b> with ease</p>
+        </div>
+    
+  
+
+    <!-- Progress Bar -->
+    <div class="progress mb-4">
+        <div id="progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Calendar Section -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 animate__animated animate__fadeInLeft">
+                <div class="card-header bg-primary text-white text-center">
+                    <h5 class="mb-0">Welcome Guest</h5>
+                </div>
+                <div class="card-body">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Form Section -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 animate__animated animate__fadeInRight">
+                <div class="card-body">
+                    <form method="POST" class="needs-validation" novalidate>
+                        {% csrf_token %}
+
+                        <div class="step step-1">
+                            <h5 class="fw-bold">Personal Details</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="first_name" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" name="first_name" id="first_name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="last_name" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" name="last_name" id="last_name" required>
+                                </div>
+                            </div>
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email" id="email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone_number" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" name="phone_number" id="phone_number" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="state" class="form-label">State</label>
+                                    <input type="state" class="form-control" name="state" id="state" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="city" class="form-label">City</label>
+                                    <input type="city" class="form-control" name="city" id="city" required>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary w-100 mt-3 next-step">Next</button>
+                        </div>
+
+                        <div class="step step-2 d-none">
+                            <h5 class="fw-bold">Booking Details</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="check_in_date" class="form-label">Check-in Date</label>
+                                    <input type="date" class="form-control" name="check_in_date" id="check_in_date" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="check_out_date" class="form-label">Check-out Date</label>
+                                    <input type="date" class="form-control" name="check_out_date" id="check_out_date" required>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-secondary w-50 mt-3 prev-step">Back</button>
+                            <button type="button" class="btn btn-primary w-50 mt-3 next-step">Next</button>
+                        </div>
+
+                        <div class="step step-3 d-none">
+                            <h5 class="fw-bold">Additional Info</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="guests" class="form-label">Number of Guests</label>
+                                    <input type="number" class="form-control" name="number_of_guests" id="guests" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="room_type" class="form-label">Room Type</label>
+                                    <select class="form-control" name="room_type" id="room_type" required>
+                                        <option value="single">Single</option>
+                                        <option value="double">Double</option>
+                                        <option value="suite">Suite</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-secondary w-50 mt-3 prev-step">Back</button>
+                            <button type="submit" class="btn btn-success w-50 mt-3">Confirm Booking</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Progress Bar and Step Navigation -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let steps = document.querySelectorAll(".step");
+        let progressBar = document.getElementById("progress-bar");
+        let nextButtons = document.querySelectorAll(".next-step");
+        let prevButtons = document.querySelectorAll(".prev-step");
+        let currentStep = 0;
+
+        function showStep(index) {
+            steps.forEach((step, i) => {
+                step.classList.toggle("d-none", i !== index);
+            });
+            progressBar.style.width = `${(index + 1) * 33}%`;
+        }
+
+        nextButtons.forEach(btn => {
+            btn.addEventListener("click", function () {
+                if (currentStep < steps.length - 1) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            });
+        });
+
+        prevButtons.forEach(btn => {
+            btn.addEventListener("click", function () {
+                if (currentStep > 0) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            });
+        });
+
+        showStep(currentStep);
+    });
+</script>
+
+{% endblock %}

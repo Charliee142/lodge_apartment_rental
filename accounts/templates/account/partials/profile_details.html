@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Profile Details{% endblock %}
+
+{% block content %}
+<style>
+    .profile-header {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+    }
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid white;
+        margin-top: -75px;
+    }
+    .profile-card {
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .edit-profile-btn {
+        float: right;
+    }
+    .progress {
+        height: 10px;
+        border-radius: 5px;
+        transition: width 0.5s ease-in-out;
+    }
+    .progress-bar {
+        transition: width 1s ease-in-out;
+    }
+    .fade-in {
+        opacity: 0;
+        animation: fadeInUp 0.8s ease-in-out forwards;
+    }
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<div class="container py-4" id="profile-container">
+    <div class="row gutters-sm">
+        <div class="container mt-5 fade-in">
+            <div class="profile-header text-center">
+               <!-- Profile Picture (Check if available) -->
+                {% if user.profile.profile_picture %}
+                <img src="{{ user.profile.profile_picture.url }}" class="profile-image" alt="Profile Picture">
+                {% else %}
+                <img src="{% static 'images/avatar.jpg' %}" class="profile-image" alt="Default Profile">
+                {% endif %}
+                <h3 class="mt-3">{{ user.profile.first_name }} {{ user.profile.last_name }}</h3>
+                <p class="text-muted">{{ user.profile.profession }}</p>
+
+                <!-- Profile Completion Progress Bar -->
+                <div class="mt-3">
+                    <p><strong>Profile Completion: {{ completion_percentage }}%</strong></p>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                            style="width: {{ completion_percentage }}%;" 
+                            aria-valuenow="{{ completion_percentage }}" 
+                            aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Two-Factor Authentication Status -->
+                <div class="mt-2">
+                    {% if two_factor_enabled %}
+                        <span class="badge bg-success">2FA Enabled</span>
+                    {% else %}
+                        <span class="badge bg-warning">2FA Not Enabled</span>
+                    {% endif %}
+                </div>
+
+                <a href="{% url 'profile_update' %}" class="btn btn-outline-primary btn-sm edit-profile-btn">
+                    <i class="fas fa-user-edit"></i> Edit Profile
+                </a>
+            </div>
+                <!-- Redirect to profile update if incomplete -->
+                {% if completion_percentage < 100 %}
+                <div class="alert alert-danger mt-4">
+                <strong>⚠️ Profile Incomplete!</strong> You must complete your profile before booking an apartment.
+                <a href="{% url 'profile_update' %}" class="alert-link">Update Profile Now</a>.
+                </div>
+                {% endif %}
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="profile-card fade-in">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#about">About</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content mt-3">
+                            <div class="tab-pane fade show active" id="about">
+                                <p><strong>Phone:</strong> {{ user.profile.phone_number }}</p>
+                                <p><strong>Address:</strong> {{ user.profile.address }}</p>
+                                <p><strong>State:</strong> {{ user.profile.state }}</p>
+                                <p><strong>City:</strong> {{ user.profile.city }}</p>
+                                <p><strong>Email:</strong> {{ user.email }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

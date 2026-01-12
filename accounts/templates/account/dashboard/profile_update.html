@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Profile Update{% endblock %}
+{% block content %}
+<style>
+    .profile-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .profile-image {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .profile-image img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+    }
+    .btn-dark {
+        background-color: #050505;
+        color: white;
+    }
+</style>
+    <div class="container mt-5 mb-4">
+        <div class="profile-container p-4">
+            <div class="profile-image">
+                {% if user.profile.profile_picture %}
+                <img src="{{ user.profile.profile_picture.url }}" class="profile-image" alt="Profile Picture">
+                {% else %}
+                <img src="{% static 'images/avatar.jpg' %}" class="profile-image" alt="Default Profile">
+                {% endif %}
+                <h5 class="mt-2">{{ user.profile.first_name }} {{ user.profile.last_name }}</h5>
+                <p class="text-muted">{{ user.email }}</p>
+            </div>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="first_name" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.profile.first_name }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="last_name" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.profile.last_name }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="phone_number" class="form-label">Mobile Number</label>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ user.profile.phone_number }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="address" name="address" value="{{ user.profile.address }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="state" class="form-label">State</label>
+                        <input type="text" class="form-control" id="state" name="state" value="{{ user.profile.state }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="city" class="form-label">City</label>
+                        <input type="text" class="form-control" id="city" name="city" value="{{ user.profile.city }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="id_email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="id_email" name="email" value="{{ user.email }}" required>
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                        <button type="submit" class="btn btn-dark px-5">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

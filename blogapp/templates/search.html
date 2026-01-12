@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Search{% endblock %}
+{% block content %}
+
+    <!-- BLOG LIST
+    ================================================== -->
+    <div class="container mb-11 mt-5">
+        <div class="row">
+            <div class="col-md-7 col-lg-8 col-xl-9 mb-5 mb-md-0">
+              
+                <!-- Blog Post -->
+                {% include "includes/list.html" %}
+               
+                <!-- PAGINATION
+                ================================================== -->
+                
+            </div>
+            <div class="col-md-5 col-lg-4 col-xl-3">
+              
+                 <!-- BLOG SIDEBAR
+                ================================================== -->
+                
+               {% include "includes/sidebar.html" %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

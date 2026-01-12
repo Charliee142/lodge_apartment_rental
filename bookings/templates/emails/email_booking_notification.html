@@ -1,0 +1,25 @@
+
+
+{% block content %}
+
+<div class="container">
+    <h2>New Booking Request</h2>
+    <p>Dear {{ landlord_name }},</p>
+    <p>A new booking request has been made for your apartment: <strong>{{ apartment_name }}</strong>.</p>
+    <p><strong>Booking Details:</strong></p>
+    <ul>
+        <li><strong>Renter:</strong> {{ renter_name }}</li>
+        <li><strong>Email:</strong> {{ email }}</li>
+        <li><strong>Phone Number:</strong> {{ phone_number }}</li>
+        <li><strong>State:</strong> {{ state }}</li>
+        <li><strong>City:</strong> {{ city }}</li>
+        <li><strong>Check-in Date:</strong> {{ check_in_date }}</li>
+        <li><strong>Check-out Date:</strong> {{ check_out_date }}</li>
+        <li><strong>Guests:</strong> {{ number_of_guests }}</li>
+    </ul>
+    <p>Please <a href="{{ landlord_dashboard_url }}" class="button">Log in</a> to approve or reject this booking or Contact the Renter directly.</p>
+    <p>Thank you!</p>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Booking Success{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    {% if booking %}
+    <div class="card shadow-lg p-4 bg-white text-center w-100" style="max-width: 600px;">
+        <div class="card-body">
+            <h1 class="text-success">
+                <i class="bi bi-check-circle-fill"></i> Booking Request Sent!
+            </h1>
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}danger{% else %}info{% endif %} mt-3 fade show" role="alert">
+                <h4 class="alert-heading">{{ message|safe }}</h4>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <p class="lead mt-3">Thank you for your reservation. A confirmation email has been sent.</p>
+
+            <a href="{% url 'user_dashboard' %}" class="btn btn-primary mt-3">Manage My Booking</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Confetti Animation -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.0"></script>
+<script>
+    setTimeout(() => { confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); }, 500);
+</script>
+
+<!-- Auto-dismiss Alert Message -->
+<script>
+    setTimeout(function() {
+        let alert = document.querySelector(".alert");
+        if (alert) {
+            alert.style.transition = "opacity 0.5s ease";
+            alert.style.opacity = "0";
+            setTimeout(() => alert.remove(), 500);
+        }
+    }, 5000);  // Alert disappears after 5 seconds
+</script>
+
+{% endblock %}

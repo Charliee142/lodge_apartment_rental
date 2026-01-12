@@ -1,0 +1,354 @@
+{% extends 'base.html' %}
+{% load social_share %}
+{% block title %}{{ apartment.name }}{% endblock %}
+
+{% block content %}
+
+<style>
+    .video-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        margin-bottom: 20px;
+    }
+</style>
+
+<style>
+    .btn {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<style>
+    /* Smooth fade-in animation for the modal */
+    .modal.fade .modal-dialog {
+        transform: translateY(-20px);
+        opacity: 0;
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    }
+    .modal.show .modal-dialog {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    /* Carousel Image Styling */
+    .carousel-item img {
+        border-radius: 10px;
+        max-height: 450px;
+        object-fit: cover;
+    }
+
+    /* Thumbnail Styling */
+    .thumbnail-container {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    .thumbnail-container img {
+        width: 60px;
+        height: 60px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: transform 0.2s ease-in-out;
+    }
+    .thumbnail-container img:hover {
+        transform: scale(1.1);
+        border: 2px solid #007bff;
+    }
+</style>
+
+<style>
+    /* Fade-in animation for the entire section */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Image Hover Effect */
+    .apartment-img {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    .apartment-img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Button Hover Effects */
+    .btn-hover:hover {
+        transform: translateY(-3px);
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Features Badge Reveal */
+    .feature-badge {
+        opacity: 0;
+        animation: fadeIn 0.5s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Delay for each feature badge */
+   
+</style>
+
+<!-- Apartment Image Modal -->
+<div class="modal fade" id="apartmentModal{{ apartment.id }}" tabindex="-1" aria-labelledby="apartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-bold" id="apartmentModalLabel">{{ apartment.name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Image Carousel -->
+                    <div class="col-lg-12">
+                        <div id="apartmentCarousel{{ apartment.id }}" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for image in apartment.apartment_images.all %}
+                                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                        <img src="{{ image.image.url }}" class="d-block w-100 shadow-sm" alt="Apartment Image">
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- Carousel Controls -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#apartmentCarousel{{ apartment.id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#apartmentCarousel{{ apartment.id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
+                        <!-- Image Thumbnails -->
+                        <div class="thumbnail-container d-flex justify-content-center mt-3">
+                            {% for image in apartment.apartment_images.all %}
+                                <img src="{{ image.image.url }}" class="img-thumbnail mx-1 shadow-sm"
+                                     data-bs-target="#apartmentCarousel{{ apartment.id }}" data-bs-slide-to="{{ forloop.counter0 }}">
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- SHOP SINGLE
+    ================================================== -->
+    <div class="container pb-4 pb-xl-7">
+        <div class="row mb-4">
+            <div class="container-fluid py-5 fade-in">
+                <div class="row align-items-center">
+                    <!-- Apartment Image and Modal Trigger -->
+                    <div class="col-lg-6 col-xl-7 mb-4 mb-lg-0">
+                        <div class="position-relative">
+                            <img src="{{ apartment.images.url }}" class="img-fluid rounded shadow-sm apartment-img" alt="{{ apartment.title }}">
+                            <!-- View More Images Button -->
+                            <button type="button" class="btn btn-info mt-3 w-100 btn-hover" data-bs-toggle="modal" data-bs-target="#apartmentModal{{ apartment.id }}">
+                                View More Images
+                            </button>
+                        </div>
+                    </div>
+            
+                    <!-- Apartment Details -->
+                    <div class="col-lg-6 col-xl-5">
+                        <div class="ms-lg-4">
+                            <h2 class="fw-bold">{{ apartment.name }}</h2>
+                            <p class="text-muted">{{ apartment.description }}</p>
+            
+                            <!-- Price Section -->
+                            <div class="mb-4">
+                                <p class="fw-bold mb-1">Price:</p>
+                                <span class="h4 fw-bold text-success">${{ apartment.price }} / Night</span>
+                                <del class="text-muted ms-2">$959</del>
+                            </div>
+            
+                            <!-- Features -->
+                            <div class="mb-4">
+                                <p class="fw-bold mb-2">Features:</p>
+                                <ul class="list-inline">
+                                    {% for feature in apartment.features.all %}
+                                    <li class="list-inline-item badge bg-light text-dark p-2 feature-badge">
+                                        <i class=""></i> {{ feature.name }}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+            
+                            <!-- Booking & Actions -->
+                            <div class="d-flex flex-wrap gap-2">
+                                {% if apartment.status == "vacant" %}
+                                {% if has_pending_booking %}
+                                    <button class="btn btn-danger w-100" disabled>Booked already</button>
+                                {% else %}
+                                    <a href="{% url 'book_apartment' apartment.id %}" class="btn btn-success flex-grow-1 btn-hover">Book Now</a>
+                                {% endif %}
+                            {% else %}
+                                <button class="btn btn-danger w-100" disabled>Occupied</button>
+                            {% endif %}
+                            
+            
+                                <a href="mailto:{{ apartment.owner.email }}?subject=Interested in {{ apartment.title }}&body=Hello, I am interested in renting {{ apartment.title }}. Can we discuss further?"
+                                   class="btn btn-primary flex-grow-1 btn-hover">Email Landlord</a>
+            
+                                <form method="POST" action="{% url 'add_to_favorites' apartment.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-warning w-100 mt-2 btn-hover">Add to Favorites</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                {% if apartment.apartment_video %}
+            <div class="d-flex justify-content-center">
+                <div class="video-container">
+                    <h1 class="text-center">Apartment Video</h1>
+                    <video id="apartmentVideo" class="w-100" controls>
+                        <source src="{{ apartment.apartment_video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="d-flex align-items-center justify-content-between border-top pt-2 mt-4">
+               {% if request.user.is_authenticated %}
+                <button id="like-btn" class="btn btn-sm btn-outline-success like-btn" data-apartment-id="{{ apartment.id }}">
+                    👍 <span id="like-count">{{ apartment.likes }}</span>
+                </button>
+                {% else %}
+                <a href="{% url 'account_login' %}" class="btn btn-sm btn-outline-success">👍 {{ apartment.likes }}</a>
+                {% endif %}
+                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">🔄 Share This Apartment with Friends</button>
+            </div>
+
+  <!-- Modal -->
+  <div class="modal fade bg-light" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content shadow-lg rounded-4">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-share-nodes me-2"></i>Share This Apartment with Friends</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <button class="btn btn-outline-primary d-flex align-items-center px-4 py-2 rounded-3">
+                    <i class="fa-brands fa-facebook me-2"></i> {% post_to_facebook object_or_url "Facebook" %}
+                </button>
+                <button class="btn btn-outline-success d-flex align-items-center px-4 py-2 rounded-3">
+                    <i class="fa-brands fa-whatsapp me-2"></i> {% post_to_whatsapp object_or_url "WhatsApp" %}
+                </button>
+                <button class="btn btn-outline-info d-flex align-items-center px-4 py-2 rounded-3">
+                    <i class="fa-brands fa-twitter me-2"></i> {% post_to_twitter "New Song: {{object.title}}. Check it out!" object_or_url "Twitter" %}
+                </button>
+                <button class="btn btn-outline-danger d-flex align-items-center px-4 py-2 rounded-3">
+                    <i class="fa-solid fa-envelope me-2"></i> {% send_email object.title "New Song: {{object.title}}. Check it out!" object_or_url "Email" %}
+                </button>
+            </div>
+        </div>
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+  
+            <!-- Reviews Section -->
+            <div class="card p-3 shadow-sm mt-4">
+                <h5>Reviews</h5>
+                <ul class="list-unstyled">
+                    {% for review in apartment.ratings.all %}
+                    <li class="border rounded p-3 mb-3">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ review.user.profile.profile_picture.url }}" alt="User" class="rounded-circle me-2" width="40" height="40">
+                            <div>
+                                <h6 class="mb-0">{{ review.user.profile.first_name }} {{ review.user.profile.last_name }}</h6>
+                                <small class="text-muted">{{ review.created_at }}</small>
+                                {% if review.user.is_verified %}
+                                    <span class="badge bg-success">Verified Guest</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <p class="mt-2">{{ review.comment }}</p>
+                        <span class="text-warning">{{ review.rating }} ★</span>
+                    </li>
+                    {% empty %}
+                    <p>No reviews yet. Be the first to review this apartment</p>
+                    {% endfor %}
+                </ul>
+            
+                <!-- Add Review Form -->
+                <h5 class="mt-4">Add a Review</h5>
+                <form method="POST" action="{% url 'submit_review' apartment.id %}">
+                    {% csrf_token %}
+                    <select name="rating" class="form-select mb-2" required>
+                        <option value="5">5 ★</option>
+                        <option value="4">4 ★</option>
+                        <option value="3">3 ★</option>
+                        <option value="2">2 ★</option>
+                        <option value="1">1 ★</option>
+                    </select>
+                    <textarea class="form-control mb-2" name="comment" rows="3" placeholder="Write your review..." required></textarea>
+                    <button type="submit" class="btn btn-primary btn-block">Submit Review</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#like-btn').click(function () {
+                var apartmentId = $(this).data('apartment-id');
+                $.ajax({
+                    url: "{% url 'like_apartment' %}",
+                    data: { 'apartment_id': apartmentId },
+                    success: function (data) {
+                        $('#like-count').text(data.likes);
+                    },
+                    error: function () {
+                        alert('Error liking the apartment.');
+                    }
+                });
+            });
+        });
+    
+    </script>
+    
+
+    
+{% endblock %}
